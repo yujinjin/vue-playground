@@ -1,0 +1,44 @@
+{
+    "name": "@yujinjin/sfc-playground",
+    "private": true,
+    "version": "0.0.1",
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview",
+        "lint": "eslint --cache --max-warnings 0 .",
+        "lint:fix": "pnpm run lint --fix",
+        "typecheck": "vue-tsc --noEmit"
+    },
+    "dependencies": {
+        "@vue/repl": "^4.2.0",
+        "vue": "^3.4.27",
+        "semver": "^7.6.2"
+    },
+    "devDependencies": {
+        "@types/node": "^20.12.12",
+        "@types/semver": "^7.5.8",
+        "@vitejs/plugin-vue": "^5.0.4",
+        "@vue/tsconfig": "^0.5.1",
+        "eslint": "^9.3.0",
+        "prettier": "^3.2.5",
+        "sass": "^1.77.2",
+        "typescript": "^5.4.5",
+        "vite": "^5.2.11",
+        "vue-tsc": "^2.0.19"
+    },
+    "prettier": {
+        "tabWidth": 4,
+        "useTabs": false,
+        "jsxBracketSameLine": false,
+        "printWidth": 200,
+        "trailingComma": "none",
+        "arrowParens": "avoid",
+        "semi": true,
+        "singleQuote": false,
+        "quoteProps": "consistent",
+        "htmlWhitespaceSensitivity": "ignore",
+        "bracketSpacing": true
+    }
+}
