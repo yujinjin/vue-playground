@@ -25,19 +25,8 @@
         "skipLibCheck": true, // 忽略所有的声明文件（ *.d.ts）的类型检查。
         "removeComments": true,
         "importHelpers": true,
-        "types": ["node", "webpack-env", "element-plus/global"],
-        // "typeRoots": ["./node_modules/@types/", "./types"],
-        "paths": {
-            "@/*": ["src/*"],
-            "@views/*": ["src/views/*"],
-            "@components/*": ["src/components/*"],
-            "@style/*": ["src/assets/style/*"],
-            "@imgs/*": ["src/assets/images/*"],
-            "@api/*": ["src/api/*"],
-            "/#/*": ["types/*"]
-        }, // 模块名到基于 baseUrl的路径映射的列表。
+        "types": ["node", "element-plus/global"],
         "lib": ["esnext", "dom", "dom.iterable", "scripthost"] // 编译过程中需要引入的库文件的列表。
     },
-    "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "types/**/*.d.ts", "types/**/*.ts", "mock/**/*.ts", "mock/index.js"],
-    "exclude": ["node_modules", "dist", "**/*.js"]
+    "exclude": ["node_modules", "dist", "src/template"]
 }

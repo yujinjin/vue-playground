@@ -18,10 +18,6 @@ module.exports = defineConfig({
         }
     },
     plugins: ["prettier", "vue", "@typescript-eslint/eslint-plugin"],
-    globals: {
-        logs: true,
-        config: true
-    },
     extends: ["eslint:recommended", "plugin:vue/vue3-essential", "@vue/eslint-config-typescript/recommended", "@vue/eslint-config-prettier", "@vue/eslint-config-prettier/skip-formatting"],
     rules: {
         // 允许调用 console 对象的方法

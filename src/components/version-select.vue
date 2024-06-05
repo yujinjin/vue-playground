@@ -2,7 +2,7 @@
  * @创建者: yujinjin9@126.com
  * @创建时间: 2024-05-31 16:09:38
  * @最后修改作者: yujinjin9@126.com
- * @最后修改时间: 2024-06-03 19:07:27
+ * @最后修改时间: 2024-06-04 17:45:08
  * @项目的路径: \vue-playground\src\components\version-select.vue
  * @描述: 选择版本下拉框
 -->
@@ -65,6 +65,7 @@ async function fetchVersions(): Promise<string[]> {
 }
 
 async function toggle() {
+    window.dispatchEvent(new Event("click"));
     expanded.value = !expanded.value;
     if (!versionList.value) {
         versionList.value = await fetchVersions();
