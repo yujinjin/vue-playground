@@ -2,7 +2,7 @@
  * @创建者: yujinjin9@126.com
  * @创建时间: 2024-05-31 16:01:35
  * @最后修改作者: yujinjin9@126.com
- * @最后修改时间: 2024-06-04 10:45:34
+ * @最后修改时间: 2024-06-14 10:32:55
  * @项目的路径: \vue-playground\src\components\Header.vue
  * @描述: 页面头部模板
 -->
@@ -13,6 +13,7 @@
             <span>Vue SFC Playground</span>
         </h1>
         <div class="links">
+            <VersionSelect v-model="store.dependencyVersion.elementPlus" :isLoading="store.loading" pkg="element-plus" label="Element Plus" />
             <VersionSelect v-model="store.typescriptVersion" :isLoading="store.loading" pkg="typescript" label="TypeScript Version" />
             <VersionSelect v-model="store.vueVersion!" :isLoading="store.loading" pkg="vue" label="Vue Version" />
             <button title="Copy sharable URL" class="share" @click="copyLink">
@@ -30,6 +31,8 @@
 <script setup lang="ts">
 import VersionSelect from "./version-select.vue";
 import type { ReplStore } from "@vue/repl";
+import { ElMessage } from "element-plus";
+import "element-plus/es/components/message/style/css";
 import Share from "../icons/Share.vue";
 import GitHub from "../icons/GitHub.vue";
 import Reload from "../icons/Reload.vue";
@@ -45,7 +48,7 @@ async function copyLink(e: MouseEvent) {
         return;
     }
     await navigator.clipboard.writeText(location.href);
-    alert("Sharable URL has been copied to clipboard.");
+    ElMessage.success("Sharable URL has been copied to clipboard.");
 }
 </script>
 <style lang="scss" scoped>

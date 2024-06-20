@@ -2,38 +2,31 @@
  * @创建者: yujinjin9@126.com
  * @创建时间: 2024-05-31 16:09:38
  * @最后修改作者: yujinjin9@126.com
- * @最后修改时间: 2024-06-04 17:45:08
+ * @最后修改时间: 2024-06-14 16:00:46
  * @项目的路径: \vue-playground\src\components\version-select.vue
  * @描述: 选择版本下拉框
 -->
 <template>
-    <div class="version-select" @click.stop>
-        <span class="active-version" @click="toggle">
-            {{ label }}
-            <span class="number">{{ isShowLoading ? "loading..." : version }}</span>
-        </span>
-        <ul class="versions" :class="{ expanded }">
-            <li v-if="!versionList"><a>loading versions...</a></li>
-            <li v-for="item of versionList" :class="{ active: item === version }">
-                <a @click="setVersion(item)">v{{ item }}</a>
-            </li>
-            <div @click="expanded = false">
-                <slot />
-            </div>
-        </ul>
+    <div class="version-select">
+        <div class="label-text">{{ label }}：</div>
+        <div class="input-box">
+            <el-select v-model="version" size="small" :loading="!versionList" loading-text="loading versions..." @change="isShowLoading = true" @visible-change="visibleChangeHandle">
+                <el-option v-for="item of versionList" :key="item" :value="item" :label="item" />
+            </el-select>
+        </div>
     </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import { gte } from "semver";
+import { ElSelect, ElOption } from "element-plus";
+import "element-plus/es/components/select/style/css";
 
 const props = defineProps<{
     pkg: string;
     label: string;
     isLoading: boolean;
 }>();
-
-const expanded = ref(false);
 
 const versionList = ref<string[]>();
 
@@ -44,7 +37,6 @@ const isShowLoading = ref(false);
 watch(
     () => props.isLoading,
     value => {
-        console.info("..............", value);
         if (!value) {
             isShowLoading.value = false;
         }
@@ -60,34 +52,17 @@ async function fetchVersions(): Promise<string[]> {
         return versions.filter(version => gte(version, "3.2.0"));
     } else if (props.pkg === "typescript") {
         return versions.filter(version => !version.includes("dev") && !version.includes("insiders"));
+    } else if (props.pkg === "element-plus") {
+        return versions.filter(version => gte(version, "2.2.0"));
     }
     return versions;
 }
 
-async function toggle() {
-    window.dispatchEvent(new Event("click"));
-    expanded.value = !expanded.value;
+async function visibleChangeHandle() {
     if (!versionList.value) {
         versionList.value = await fetchVersions();
     }
 }
-
-function setVersion(value: string) {
-    isShowLoading.value = true;
-    version.value = value;
-    expanded.value = false;
-}
-
-onMounted(() => {
-    window.addEventListener("click", () => {
-        expanded.value = false;
-    });
-    window.addEventListener("blur", () => {
-        if (document.activeElement?.tagName === "IFRAME") {
-            expanded.value = false;
-        }
-    });
-});
 </script>
 <style lang="scss" scoped>
 .version-select {
@@ -97,62 +72,12 @@ onMounted(() => {
     align-items: center;
     height: 100%;
 
-    .active-version {
-        cursor: pointer;
-        position: relative;
-        display: inline-flex;
-        place-items: center;
-
-        &::after {
-            content: "";
-            width: 0;
-            height: 0;
-            border-left: 4px solid transparent;
-            border-right: 4px solid transparent;
-            border-top: 6px solid #aaa;
-            margin-left: 8px;
-        }
-
-        .number {
-            color: var(--green);
-            margin-left: 4px;
-        }
+    .label-text {
+        display: inline-block;
     }
 
-    .versions {
-        display: none;
-        position: absolute;
-        left: 0;
-        top: 40px;
-        background-color: var(--bg-light);
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        list-style-type: none;
-        padding: 8px;
-        margin: 0;
+    .input-box {
         width: 200px;
-        max-height: calc(100vh - 70px);
-        overflow: scroll;
-
-        &.expanded {
-            display: block;
-        }
-
-        a {
-            display: block;
-            padding: 6px 12px;
-            text-decoration: none;
-            cursor: pointer;
-            color: var(--base);
-
-            &:hover {
-                color: var(--green);
-            }
-        }
-
-        .active a {
-            color: var(--green);
-        }
     }
 }
 </style>

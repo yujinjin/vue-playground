@@ -2,7 +2,7 @@
  * @创建者: yujinjin9@126.com
  * @创建时间: 2024-06-03 09:38:59
  * @最后修改作者: yujinjin9@126.com
- * @最后修改时间: 2024-06-04 09:51:58
+ * @最后修改时间: 2024-06-18 14:52:40
  * @项目的路径: \vue-playground\src\app.vue
  * @描述: 主页面
 -->
@@ -14,8 +14,7 @@
         @keydown.ctrl.s.prevent
         @keydown.meta.s.prevent
         :store="store"
-        :showCompileOutput="true"
-        :autoResize="true"
+        :clearConsole="false"
         :preview-options="{
             customCode: {
                 importCode: `import { initCustomFormatter } from 'vue'`,
@@ -25,18 +24,26 @@
     />
 </template>
 <script setup lang="ts">
-import { ref, watchEffect } from "vue";
+import { ref, watch } from "vue";
 import { Repl } from "@vue/repl";
 import Monaco from "@vue/repl/monaco-editor";
 import userStore from "./composables/store";
 import Header from "./components/header.vue";
 
-const store = userStore();
+const store = userStore(location.hash.slice(1));
 
 const replRef = ref<InstanceType<typeof Repl>>();
 
+console.info("......................");
+
 // persist state to URL hash
-watchEffect(() => history.replaceState({}, "", store.serialize()));
+watch(
+    () => store.serialize(),
+    value => {
+        console.info(">>>>>>>>>>>>>>>>>", value);
+        history.replaceState({}, "", value);
+    }
+);
 
 function reloadPage() {
     replRef.value?.reload();

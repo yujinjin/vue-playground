@@ -1,3 +1,3 @@
-# vue-sfc-playground
+# cms-playground
 
-vue3 在线交互演示
+内容管理系统组件在线交互演示

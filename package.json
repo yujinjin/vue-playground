@@ -12,9 +12,11 @@
         "typecheck": "vue-tsc --noEmit"
     },
     "dependencies": {
-        "@vue/repl": "^4.2.0",
+        "@vue/repl": "^4.2.1",
         "vue": "^3.4.27",
-        "semver": "^7.6.2"
+        "semver": "^7.6.2",
+        "element-plus": "^2.7.4",
+        "fflate": "^0.8.2"
     },
     "devDependencies": {
         "@types/node": "^20.12.12",
